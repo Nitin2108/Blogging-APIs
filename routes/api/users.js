@@ -91,11 +91,11 @@ router.post(
   }
 );
 
-// @route    PUT api/users/subscriber/:id
-// @desc     Like a post
+// @route    PUT api/users/subscribe/:id
+// @desc     Subscribe a blogger
 // @access   Private
 
-router.put('/subscriber/:email', auth, async (req, res) => {
+router.put('/subscribe/:email', auth, async (req, res) => {
   try {
     
     const user = await User.findOne({email:req.user.email});
@@ -126,7 +126,7 @@ router.put('/subscriber/:email', auth, async (req, res) => {
   }
 });
 
-// @route    PUT api/users/subscriber/:id
+// @route    PUT api/users/unsubscribe/:id
 // @desc     Unsubscribe a blogger
 // @access   Private
 router.put('/unsubscribe/:email', auth, async (req, res) => {
@@ -156,7 +156,7 @@ router.put('/unsubscribe/:email', auth, async (req, res) => {
   }
 });
 
-// @route    GET api/users/:id
+// @route    GET api/users/deactivate/:id
 // @desc     deActivate user by ID
 // @access   Private
 router.put('/deactivate/:email', auth, async (req, res) => {
@@ -178,7 +178,7 @@ router.put('/deactivate/:email', auth, async (req, res) => {
 });
 
 
-// @route    GET api/users/:id
+// @route    GET api/users/activate/:id
 // @desc     Activate user by ID
 // @access   Private
 router.put('/activate/:email', auth, async (req, res) => {
@@ -199,5 +199,17 @@ router.put('/activate/:email', auth, async (req, res) => {
   }
 });
 
+// @route    GET api/users
+// @desc     Get all users
+// @access   Public
+router.get('/', async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router;
