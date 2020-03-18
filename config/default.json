@@ -1,5 +1,5 @@
 {
-    "mongoURI": "mongodb://localhost:27017/blogging",
+    "mongoURI": "mongodb+srv://viral:viral@cluster0-uy8hj.mongodb.net/test?retryWrites=true&w=majority",
     "jwtSecret": "secret",
     "githubToken": ""
   }
