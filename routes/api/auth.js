@@ -46,12 +46,13 @@ router.post('/reset-password/:email',async(req,res)=>
 {
   try{
     const { email } = req.params;
+    console.log(email);
     let user;
-  try {
+ 
     user = await User.findOne({ email });
-  } catch (err) {
-    res.status(404).send("No user with that email")
-  }
+    
+     if(!user)
+     return res.status(404).send("No user with that email")
 
   const token = usePasswordHashToMakeToken(user)
   const url = getPasswordResetURL(user, token)
@@ -60,16 +61,16 @@ router.post('/reset-password/:email',async(req,res)=>
     transporter.sendMail(emailTemplate, (err, info) => {
       console.log(info);
       if (err) {
-        res.status(500).send("Error sending Mail")
+         return res.status(500).send("Error sending Mail")
       }
-      res.status(200).send(`Email sent`)
+       return res.status(200).send(`Email sent`)
     })
   }
   sendEmail()
     
 }
   catch(err){
-    console.log(err);
+   return err;
   }
 });
 
