@@ -21,6 +21,9 @@ const PostSchema = new Schema({
   avatar: {
     type: String
   },
+  x:{
+    type: String
+  },
   isActive:{
      type: Boolean,
      default: true

@@ -41,8 +41,9 @@ router.post(
         title: req.body.title,
         content: req.body.content,
         name: user.name,
-        avatar: user.avatar,
-        user: user.email
+        avatar: req.body.avatar,
+        user: user.email,
+        x:req.body.x
       });
 
       const post = await newPost.save();
