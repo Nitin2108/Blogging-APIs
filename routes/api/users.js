@@ -36,7 +36,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password, mobilenumber, gender,avatar } = req.body;
+    const { name, email, password, mobilenumber, gender,avatar,x } = req.body;
 
 
     try {
@@ -60,7 +60,7 @@ router.post(
         mobilenumber,
         gender,
         avatar,
-        password
+        password,x
       });
 
       const salt = await bcrypt.genSalt(10);
@@ -98,7 +98,7 @@ router.post(
 router.put('/subscribe/:email', auth, async (req, res) => {
   try {
     
-    const user = await User.findOne({email:req.user.email});
+    const user = await User.findOne({email:req.user.email}).select('-password');;
     console.log(user);
     if (
       user.subscribers.filter(s => s.user.toString() === req.params.email).length > 0
@@ -204,7 +204,7 @@ router.put('/activate/:email', auth, async (req, res) => {
 // @access   Public
 router.get('/', async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().select('-password');;
     res.json(users);
   } catch (err) {
     console.error(err.message);
